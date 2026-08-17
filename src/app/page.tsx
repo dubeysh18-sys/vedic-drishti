@@ -6,6 +6,7 @@ import ReflectionInput from "@/components/reflection-input";
 import LoadingView from "@/components/loading-view";
 import ReflectionResponse from "@/components/reflection-response";
 import { EmotionDefinition } from "@/types/emotion";
+import { getEmotionPromptStarter } from "@/lib/emotions/taxonomy";
 import { ReflectionMessageResponse } from "@/types/reflection";
 import { Sparkles, BookOpen } from "lucide-react";
 
@@ -23,7 +24,7 @@ export default function HomePage() {
       setInputText("");
     } else {
       setSelectedEmotion(emotion);
-      setInputText(`I am feeling ${emotion.name.toLowerCase()} because `);
+      setInputText(getEmotionPromptStarter(emotion.id));
 
       // Auto-scroll to chat/input section on mobile & desktop
       setTimeout(() => {

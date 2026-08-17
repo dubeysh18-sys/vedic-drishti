@@ -151,3 +151,34 @@ export function getEmotionById(id: string): EmotionDefinition | undefined {
   const normalized = id.trim().toLowerCase();
   return CONTROLLED_EMOTIONS.find((e) => e.id === normalized);
 }
+
+export function getEmotionPromptStarter(emotionId: string): string {
+  switch (emotionId.toLowerCase()) {
+    case "seeking":
+      return "I am seeking guidance on ";
+    case "grieving":
+      return "I am grieving because ";
+    case "confused":
+      return "I am feeling confused about ";
+    case "hopeful":
+      return "I am feeling hopeful about ";
+    case "heavy":
+      return "I am feeling heavy-hearted because ";
+    case "fearful":
+      return "I am feeling fearful about ";
+    case "jealous":
+      return "I am feeling jealous because ";
+    case "anxious":
+      return "I am feeling anxious because ";
+    case "overwhelmed":
+      return "I am feeling overwhelmed because ";
+    case "angry":
+      return "I am feeling angry because ";
+    case "lonely":
+      return "I am feeling lonely because ";
+    case "restless":
+      return "I am feeling restless because ";
+    default:
+      return `I am reflecting on `;
+  }
+}

@@ -47,9 +47,19 @@ export default function ReflectionInput({
     }
   };
 
-  const placeholder = selectedEmotionName
-    ? `I am feeling ${selectedEmotionName.toLowerCase()} because... (Tell me what's happening)`
-    : "Or tell me what's happening in your life right now...";
+  const getPlaceholder = (name?: string) => {
+    if (!name) return "Or tell me what's happening in your life right now...";
+    const lower = name.toLowerCase();
+    if (lower === "seeking") return "I am seeking guidance on... (Tell me what's on your mind)";
+    if (lower === "grieving") return "I am grieving because... (Tell me what you are moving through)";
+    if (lower === "confused" || lower === "hopeful" || lower === "fearful") {
+      return `I am feeling ${lower} about... (Tell me what's happening)`;
+    }
+    if (lower === "heavy") return "I am feeling heavy-hearted because... (Tell me what's happening)";
+    return `I am feeling ${lower} because... (Tell me what's happening)`;
+  };
+
+  const placeholder = getPlaceholder(selectedEmotionName);
 
   return (
     <div className="w-full max-w-3xl mx-auto flex flex-col gap-4">
