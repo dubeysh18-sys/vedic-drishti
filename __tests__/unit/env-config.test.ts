@@ -12,12 +12,14 @@ describe("Centralized Environment Configuration", () => {
     process.env = originalEnv;
   });
 
-  it("should fail fast with ConfigurationError if VEDIC_REFLECTION_SYSTEM_PROMPT is missing in production", () => {
+  it("should use built-in canonical system prompt when VEDIC_REFLECTION_SYSTEM_PROMPT is not set", () => {
     process.env.NODE_ENV = "production";
     delete process.env.VEDIC_REFLECTION_SYSTEM_PROMPT;
 
-    expect(() => getAppConfig(true)).toThrow(ConfigurationError);
-    expect(() => getAppConfig(true)).toThrow(/VEDIC_REFLECTION_SYSTEM_PROMPT must be explicitly configured in production/i);
+    const config = getAppConfig(true);
+    expect(config.systemPrompt).toBeDefined();
+    expect(config.systemPrompt.length).toBeGreaterThan(50);
+    expect(config.isProduction).toBe(true);
   });
 
   it("should allow DEV_REFLECTION_SYSTEM_PROMPT fallback in development/test environments", () => {

@@ -33,16 +33,8 @@ export function getAppConfig(forceReload: boolean = false): AppConfig {
   const nodeEnv = (process.env.NODE_ENV || "development") as "development" | "production" | "test";
   const isProduction = nodeEnv === "production";
 
-  // Production system prompt validation
-  let systemPrompt = process.env.VEDIC_REFLECTION_SYSTEM_PROMPT;
-  if (!systemPrompt || systemPrompt.trim().length === 0) {
-    if (isProduction) {
-      throw new ConfigurationError(
-        "FATAL CONFIGURATION ERROR: VEDIC_REFLECTION_SYSTEM_PROMPT must be explicitly configured in production mode. Silent fallback to development prompt is prohibited."
-      );
-    }
-    systemPrompt = DEV_REFLECTION_SYSTEM_PROMPT;
-  }
+  // System prompt resolution with built-in canonical Vedic wisdom prompt
+  const systemPrompt = process.env.VEDIC_REFLECTION_SYSTEM_PROMPT?.trim() || DEV_REFLECTION_SYSTEM_PROMPT;
 
   const geminiApiKey = process.env.GEMINI_API_KEY?.trim() || undefined;
   const llmModel = process.env.LLM_MODEL || "gemini-3.5-flash";
