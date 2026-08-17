@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-dm-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-literata: "Literata", Georgia, serif;
+    --font-noto-devanagari: "Noto Sans Devanagari", "Devanagari MT", sans-serif;
+  }
+
+  body {
+    background-color: #fcf9f2;
+    color: #1c1c18;
+    background-image: 
+      radial-gradient(circle at 100% 50%, transparent 20%, rgba(140, 133, 123, 0.03) 21%, rgba(140, 133, 123, 0.03) 34%, transparent 35%, transparent),
+      radial-gradient(circle at 0% 50%, transparent 20%, rgba(140, 133, 123, 0.03) 21%, rgba(140, 133, 123, 0.03) 34%, transparent 35%, transparent);
+    background-size: 120px 120px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Pebble Shapes from Stitch Design */
+.pebble-shape-1 {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+.pebble-shape-2 {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+.pebble-shape-3 {
+  border-radius: 50% 50% 20% 80% / 25% 80% 20% 75%;
+}
+.pebble-shape-4 {
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+}
+.pebble-shape-5 {
+  border-radius: 70% 30% 40% 60% / 60% 60% 40% 40%;
+}
+.pebble-shape-6 {
+  border-radius: 30% 70% 50% 50% / 50% 30% 70% 50%;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 30px rgba(212, 175, 55, 0.06);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover,
+.glass-card.active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.8), 0 10px 25px rgba(212, 175, 55, 0.15);
+  border-color: #D4AF37;
+}
+
+.glass-nav {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.5) 100%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+}
+
+.kicker {
+  font-family: var(--font-dm-sans);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8C857B;
+  margin-bottom: 8px;
+}
+
+.body-text {
+  font-family: var(--font-dm-sans);
+  font-size: 17px;
+  line-height: 28px;
+  font-weight: 400;
+  color: #1c1c18;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

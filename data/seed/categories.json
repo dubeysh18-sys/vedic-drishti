@@ -1,0 +1,30 @@
+[
+  {
+    "id": "cat_karma_yoga",
+    "name": "Karma Yoga",
+    "description": "The yoga of selfless action and equanimity in duties",
+    "chapters": [3, 4, 5],
+    "coreThemes": ["duty", "unattachment", "work ethic", "action", "surrender of fruits"]
+  },
+  {
+    "id": "cat_jnana_yoga",
+    "name": "Jnana Yoga",
+    "description": "The yoga of discriminative intellect, self-knowledge, and philosophical insight",
+    "chapters": [2, 7, 8, 13, 14, 15],
+    "coreThemes": ["self-knowledge", "atman", "viveka", "witness consciousness", "transience"]
+  },
+  {
+    "id": "cat_bhakti_yoga",
+    "name": "Bhakti Yoga",
+    "description": "The yoga of loving devotion, refuge, and emotional surrender",
+    "chapters": [9, 10, 11, 12, 18],
+    "coreThemes": ["devotion", "refuge", "grace", "love", "divine presence", "surrender"]
+  },
+  {
+    "id": "cat_dhyana_yoga",
+    "name": "Dhyana Yoga / Raja Yoga",
+    "description": "The yoga of meditation, stillness, and mental mastery",
+    "chapters": [6, 16, 17],
+    "coreThemes": ["meditation", "mind mastery", "stillness", "discipline", "virtues"]
+  }
+]
