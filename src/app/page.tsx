@@ -19,11 +19,10 @@ export default function HomePage() {
   const handleSelectEmotion = (emotion: EmotionDefinition) => {
     if (selectedEmotion?.id === emotion.id) {
       setSelectedEmotion(null);
+      setInputText("");
     } else {
       setSelectedEmotion(emotion);
-      if (!inputText) {
-        setInputText(`I am feeling ${emotion.name.toLowerCase()} about `);
-      }
+      setInputText(`I am feeling ${emotion.name.toLowerCase()} because `);
     }
   };
 
@@ -73,26 +72,14 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center pt-24 pb-28 px-4 md:px-8 max-w-container-max mx-auto w-full gap-10">
-      {/* Hero Section */}
-      <section className="text-center max-w-2xl mx-auto flex flex-col items-center gap-3">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo.png"
-          alt="Drishti"
-          className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-gold/40 shadow-soft mb-1 hover:scale-105 transition-transform"
-        />
-
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/60 border border-gold/30 text-secondary text-xs font-semibold uppercase tracking-wider font-sans mb-1">
-          <BookOpen className="w-3.5 h-3.5 text-gold-muted" />
-          Vedic Wisdom Reflection
-        </div>
-
-        <h1 className="font-serif text-3xl md:text-5xl font-bold text-primary tracking-tight leading-tight">
+    <div className="flex-1 flex flex-col items-center pt-20 md:pt-24 pb-28 px-4 md:px-8 max-w-container-max mx-auto w-full gap-8 md:gap-10">
+      {/* Hero Section - Directly starting with single-line title */}
+      <section className="text-center max-w-2xl mx-auto flex flex-col items-center gap-2">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-primary tracking-tight leading-tight whitespace-nowrap">
           What are you carrying today?
         </h1>
 
-        <p className="font-sans text-base md:text-lg text-muted-stone max-w-lg leading-relaxed">
+        <p className="font-sans text-sm md:text-base text-muted-stone max-w-lg leading-relaxed">
           Select an emotion below or journal your thoughts to find a timeless perspective from the Bhagavad Gita.
         </p>
       </section>

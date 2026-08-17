@@ -61,7 +61,7 @@ export default function ReflectionInput({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+              if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
                 if (value.trim() && !isLoading) onSubmit();
               }
@@ -74,7 +74,7 @@ export default function ReflectionInput({
 
           <div className="flex justify-between items-center pt-3 border-t border-outline-variant/30 mt-2">
             <span className="text-xs text-muted-stone font-sans">
-              {value.length > 0 ? `${value.length} / 2000 chars` : "Press ⌘+Enter to submit"}
+              {value.length > 0 ? `${value.length} / 2000` : ""}
             </span>
 
             <button
