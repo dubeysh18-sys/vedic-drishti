@@ -32,8 +32,9 @@ export const MahamantraRedirect: React.FC<MahamantraRedirectProps> = ({
     <div className="w-full max-w-3xl mx-auto space-y-8 animate-fade-in">
       {/* Calm Header */}
       <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-gold/30 bg-parchment-deep/40 text-center space-y-4 shadow-xl">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gold/10 text-gold mb-2">
-          <Sparkles className="w-6 h-6" />
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-full border border-gold/40 shadow-xs mb-2 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="Drishti" className="w-full h-full object-cover" />
         </div>
         <h2 className="font-serif text-2xl sm:text-3xl text-primary font-medium tracking-tight">
           A Moment for Quiet Grounding

@@ -6,18 +6,28 @@ export default function AboutPage() {
   return (
     <div className="flex-1 max-w-3xl mx-auto w-full px-6 pt-24 pb-32 flex flex-col gap-10 animate-slide-up">
       {/* Header */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-4">
         <Link
           href="/"
-          className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-widest font-sans text-muted-stone hover:text-primary transition-colors mb-2"
+          className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-widest font-sans text-muted-stone hover:text-primary transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Reflect
         </Link>
-        <h1 className="font-serif text-3xl md:text-5xl font-bold text-primary">About Drishti</h1>
-        <p className="font-sans text-base md:text-lg text-muted-stone leading-relaxed">
-          A modern philosophical reflection companion rooted in the timeless equanimity of the Bhagavad Gita.
-        </p>
+        <div className="flex items-center gap-4 mt-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="Drishti Logo"
+            className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-gold/40 shadow-soft shrink-0"
+          />
+          <div>
+            <h1 className="font-serif text-3xl md:text-5xl font-bold text-primary">About Drishti</h1>
+            <p className="font-sans text-base md:text-lg text-muted-stone leading-relaxed mt-1">
+              A modern philosophical reflection companion rooted in the timeless equanimity of the Bhagavad Gita.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* 4-Layer Trust Model Section */}

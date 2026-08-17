@@ -76,6 +76,13 @@ export default function HomePage() {
     <div className="flex-1 flex flex-col items-center pt-24 pb-28 px-4 md:px-8 max-w-container-max mx-auto w-full gap-10">
       {/* Hero Section */}
       <section className="text-center max-w-2xl mx-auto flex flex-col items-center gap-3">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.png"
+          alt="Drishti"
+          className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-gold/40 shadow-soft mb-1 hover:scale-105 transition-transform"
+        />
+
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/60 border border-gold/30 text-secondary text-xs font-semibold uppercase tracking-wider font-sans mb-1">
           <BookOpen className="w-3.5 h-3.5 text-gold-muted" />
           Vedic Wisdom Reflection

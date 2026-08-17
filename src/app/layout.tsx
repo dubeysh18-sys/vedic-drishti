@@ -34,6 +34,11 @@ export const metadata: Metadata = {
   description: "Timeless perspectives from the Bhagavad Gita for navigating modern life with equanimity and clarity.",
   keywords: ["Vedic Wisdom", "Bhagavad Gita", "Reflection", "Mindfulness", "Philosophy", "Equanimity", "Drishti"],
   authors: [{ name: "Drishti Team" }],
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({

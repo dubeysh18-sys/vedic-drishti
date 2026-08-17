@@ -21,10 +21,13 @@ export default function Header() {
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          <Link href="/" className="flex items-center gap-2 group">
-            <span className="w-8 h-8 rounded-full bg-secondary-container/60 border border-gold/40 flex items-center justify-center text-secondary group-hover:scale-105 transition-transform">
-              <Sparkles className="w-4 h-4 text-gold-muted" />
-            </span>
+          <Link href="/" className="flex items-center gap-2.5 group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt="Drishti Logo"
+              className="w-9 h-9 rounded-full object-cover border border-gold/40 group-hover:scale-105 transition-transform shadow-xs"
+            />
             <span className="font-serif text-2xl md:text-3xl font-bold tracking-tight text-primary">
               Drishti
             </span>

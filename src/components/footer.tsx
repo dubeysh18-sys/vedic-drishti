@@ -6,7 +6,13 @@ export default function Footer() {
     <footer className="w-full bg-surface-container/60 border-t border-outline-variant/30 py-8 px-6 md:px-12 mt-auto z-10">
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
         <div className="flex flex-col gap-1">
-          <div className="flex items-center justify-center md:justify-start gap-2">
+          <div className="flex items-center justify-center md:justify-start gap-2.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt="Drishti"
+              className="w-6 h-6 rounded-full object-cover border border-gold/40 shadow-2xs"
+            />
             <span className="font-serif font-bold text-lg text-primary">Drishti</span>
             <span className="text-muted-stone text-xs">•</span>
             <span className="text-xs text-muted-stone font-sans tracking-wide">Modern Reflection Companion</span>
