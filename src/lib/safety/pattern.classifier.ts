@@ -52,7 +52,15 @@ export class PatternClassifier implements SafetyClassifier {
     /\b(?:hired?\s+hitman|contract\s+killer|mass\s+shooting|school\s+shooting)\b/i,
   ];
 
-  // 7. Prohibited: Hate Speech, Group Degradation & Slurs
+  // 7. Prohibited: Verbal Abuse, Harassment, Cursing, Slurs, Toxic Aggression
+  private abusiveBehaviorPatterns: RegExp[] = [
+    /\b(?:abuse|abusing|abusive|harass|harassing|bully|bullying|insult|insulting|curse|cursing|threaten|threatening|humiliate|humiliating)\s+(?:\w+\s+){0,2}(?:someone|anybody|anyone|people|others|him|her|them|friends?|family|coworkers?|neighbors?)\b/i,
+    /\b(?:not\s+able\s+to|want\s+to|wanna|wish\s+to|learn\s+to|teach\s+me\s+to|how\s+to|how\s+can\s+i|how\s+do\s+i)\s+(?:\w+\s+){0,2}(?:abuse|curse|swear|insult|harass|bully|humiliate|threaten|intimidate|dox|stalk|gaali)\b/i,
+    /\b(?:abuse\s+as\s+good\s+as|curse\s+as\s+good\s+as|insult\s+as\s+good\s+as|harass\s+as\s+good\s+as)\b/i,
+    /\b(?:gaali|gaaliyan|bhenchod|madarchod|chutiya|harami|kutta|bastard|asshole|bitch|fuck\s+you)\b/i,
+  ];
+
+  // 8. Prohibited: Hate Speech, Group Degradation & Slurs
   private hateSpeechPatterns: RegExp[] = [
     /\bwhy\s+are\s+(?:women|men|females|males)\s+(?:inherently|naturally|all)\s+(?:manipulative|evil|toxic|inferior|bad|worthless|liars)\b/i,
     /\ball\s+(?:women|men|muslims|hindus|christians|jews|dalits|brahmins)\s+are\s+(?:evil|filthy|terrorists|inferior|subhuman|scum)\b/i,
@@ -170,6 +178,22 @@ export class PatternClassifier implements SafetyClassifier {
           decision: "REDIRECT",
           confidence: 0.96,
           reasonCode: "VIOLENCE_OR_CRIMINAL_INSTRUCTION",
+          matchedPatterns,
+          isCrisis: false,
+          type: null,
+        };
+      }
+    }
+
+    // --- STEP 3.5: Check Abusive Behavior & Harassment ---
+    for (const pattern of this.abusiveBehaviorPatterns) {
+      if (pattern.test(trimmed)) {
+        matchedPatterns.push(pattern.source);
+        return {
+          category: "VIOLENT_WRONGDOING",
+          decision: "REDIRECT",
+          confidence: 0.96,
+          reasonCode: "ABUSIVE_OR_HARASSING_BEHAVIOR",
           matchedPatterns,
           isCrisis: false,
           type: null,
