@@ -39,13 +39,17 @@ export class PatternClassifier implements SafetyClassifier {
     /\b(?:hardcore\s+porn|erotic\s+roleplay)\b/i,
   ];
 
-  // 6. Prohibited: Operational Violence, Weapons & Criminal Assistance
+  // 6. Prohibited: Operational Violence, Weapons & Harm to Others
   private violentWrongdoingPatterns: RegExp[] = [
-    /\bhow\s+(?:can|to|do)\s+i\s+(?:kill|murder|poison|stab|shoot|strangle|harm|attack)\s+(?:someone|him|her|them|my\s+\w+|people)\b/i,
+    /\b(?:murder|kill|stab|shoot|poison|strangle|attack|assault|harm|torture|slaughter)\s+(?:someone|anybody|anyone|people|person|him|her|them|others|my\s+\w+)\b/i,
+    /\b(?:hurting|killing|murdering|attacking|assaulting|poisoning|stabbing)\s+(?:someone|anybody|anyone|people|person|him|her|them|others)\b/i,
+    /\b(?:not\s+able\s+to|want\s+to|wanna|planning\s+to|thinking\s+of|going\s+to|feel\s+like|desire\s+to|wish\s+to|hate\s+and\s+want\s+to|try\s+to|trying\s+to)\s+(?:murder|kill|stab|shoot|poison|strangle|harm|attack|assault|hurt)\b/i,
+    /\bhow\s+(?:can|to|do)\s+i\s+(?:kill|murder|poison|stab|shoot|strangle|harm|attack|hurt)\s+(?:someone|him|her|them|my\s+\w+|people|others)\b/i,
     /\bhow\s+(?:can|to)\s+(?:kill|murder)\s+\w+\s+without\s+(?:getting\s+caught|being\s+caught|leaving\s+evidence)\b/i,
     /\bhow\s+(?:to|can\s+i)\s+(?:make|build|construct)\s+(?:a\s+)?(?:bomb|weapon|explosive|poison|pipe\s+bomb|firearm)\b/i,
     /\bhow\s+(?:to|can\s+i)\s+(?:rob|steal|launder|hack|blackmail|kidnap)\b/i,
-    /\bgive\s+me\s+instructions\s+for\s+(?:hurting|killing|attacking)\s+someone\b/i,
+    /\bgive\s+me\s+instructions\s+for\s+(?:hurting|killing|attacking|murdering)\s+someone\b/i,
+    /\b(?:hired?\s+hitman|contract\s+killer|mass\s+shooting|school\s+shooting)\b/i,
   ];
 
   // 7. Prohibited: Hate Speech, Group Degradation & Slurs
