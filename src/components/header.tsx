@@ -1,27 +1,58 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Bookmark, Info, Sparkles, BookOpen, Menu, X } from "lucide-react";
+import { Bookmark, Info, BookOpen, Menu } from "lucide-react";
+import SidebarDrawer from "./sidebar-drawer";
+import { ReflectionMessageResponse } from "@/types/reflection";
 
 export default function Header() {
   const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleStartNew = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    if (pathname !== "/") {
+      router.push("/");
+    }
+    // Notify page to reset reflection state to a fresh canvas
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("drishti:new-reflection"));
+    }
+  };
+
+  const handleSelectHistoryItem = (reflection: ReflectionMessageResponse) => {
+    if (pathname !== "/") {
+      router.push("/");
+    }
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent("drishti:load-reflection", { detail: reflection }));
+    }
+  };
 
   return (
     <>
       <header className="fixed top-0 left-0 w-full z-40 glass-nav px-4 md:px-8 py-3.5 flex justify-between items-center transition-all">
         <div className="flex items-center gap-3">
+          {/* Left Drawer Toggle (Available on all devices) */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 -ml-1 text-primary hover:bg-white/40 transition-colors rounded-full flex items-center justify-center md:hidden"
-            aria-label="Toggle menu"
+            onClick={() => setDrawerOpen(true)}
+            className="p-2 -ml-1 text-primary hover:bg-white/40 active:scale-95 transition-all rounded-full flex items-center justify-center"
+            aria-label="Open navigation drawer"
+            title="Open Menu & History"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <Menu className="w-5 h-5" />
           </button>
 
-          <Link href="/" className="flex items-center gap-2.5 group">
+          {/* Logo - Starts fresh page */}
+          <Link
+            href="/"
+            onClick={handleStartNew}
+            className="flex items-center gap-2.5 group cursor-pointer"
+            title="Drishti Home"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/logo.png"
@@ -38,6 +69,7 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <Link
             href="/"
+            onClick={handleStartNew}
             className={`font-sans text-sm font-medium transition-colors ${
               pathname === "/" ? "text-primary font-semibold" : "text-muted-stone hover:text-primary"
             }`}
@@ -83,37 +115,13 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 top-[57px] bg-background/95 backdrop-blur-xl z-30 flex flex-col p-6 gap-6 md:hidden animate-slide-up border-b border-gold/20">
-          <nav className="flex flex-col gap-4">
-            <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 p-3 rounded-xl bg-surface-container/70 text-primary font-medium text-lg"
-            >
-              <Sparkles className="w-5 h-5 text-gold-muted" />
-              New Reflection
-            </Link>
-            <Link
-              href="/archive"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 p-3 rounded-xl bg-surface-container/70 text-primary font-medium text-lg"
-            >
-              <Bookmark className="w-5 h-5 text-gold-muted" />
-              Saved Reflections
-            </Link>
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 p-3 rounded-xl bg-surface-container/70 text-primary font-medium text-lg"
-            >
-              <Info className="w-5 h-5 text-gold-muted" />
-              About & Trust Model
-            </Link>
-          </nav>
-        </div>
-      )}
+      {/* Sidebar Drawer */}
+      <SidebarDrawer
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        onNewReflection={handleStartNew}
+        onSelectHistoryItem={handleSelectHistoryItem}
+      />
     </>
   );
 }

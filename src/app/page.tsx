@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import EmotionGrid from "@/components/emotion-grid";
 import ReflectionInput from "@/components/reflection-input";
 import LoadingView from "@/components/loading-view";
@@ -8,7 +8,8 @@ import ReflectionResponse from "@/components/reflection-response";
 import { EmotionDefinition } from "@/types/emotion";
 import { getEmotionPromptStarter } from "@/lib/emotions/taxonomy";
 import { ReflectionMessageResponse } from "@/types/reflection";
-import { Sparkles, BookOpen } from "lucide-react";
+import { saveChatToHistory } from "@/lib/storage/history-store";
+import { Sparkles } from "lucide-react";
 
 export default function HomePage() {
   const [selectedEmotion, setSelectedEmotion] = useState<EmotionDefinition | null>(null);
@@ -17,6 +18,42 @@ export default function HomePage() {
   const [reflectionResult, setReflectionResult] = useState<ReflectionMessageResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const inputSectionRef = useRef<HTMLDivElement>(null);
+
+  const handleReset = () => {
+    setReflectionResult(null);
+    setInputText("");
+    setSelectedEmotion(null);
+    setError(null);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    const handleNewReflectionEvent = () => {
+      handleReset();
+    };
+
+    const handleLoadReflectionEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<ReflectionMessageResponse>;
+      if (customEvent.detail) {
+        setIsLoading(false);
+        setError(null);
+        setReflectionResult(customEvent.detail);
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    };
+
+    window.addEventListener("drishti:new-reflection", handleNewReflectionEvent);
+    window.addEventListener("drishti:load-reflection", handleLoadReflectionEvent);
+
+    return () => {
+      window.removeEventListener("drishti:new-reflection", handleNewReflectionEvent);
+      window.removeEventListener("drishti:load-reflection", handleLoadReflectionEvent);
+    };
+  }, []);
 
   const handleSelectEmotion = (emotion: EmotionDefinition) => {
     if (selectedEmotion?.id === emotion.id) {
@@ -59,18 +96,13 @@ export default function HomePage() {
 
       const data: ReflectionMessageResponse = await res.json();
       setReflectionResult(data);
+      // Automatically cache reflection to history
+      saveChatToHistory(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleReset = () => {
-    setReflectionResult(null);
-    setInputText("");
-    setSelectedEmotion(null);
-    setError(null);
   };
 
   if (isLoading) {
