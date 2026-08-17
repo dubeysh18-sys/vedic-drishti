@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import EmotionGrid from "@/components/emotion-grid";
 import ReflectionInput from "@/components/reflection-input";
 import LoadingView from "@/components/loading-view";
@@ -15,6 +15,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [reflectionResult, setReflectionResult] = useState<ReflectionMessageResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const inputSectionRef = useRef<HTMLDivElement>(null);
 
   const handleSelectEmotion = (emotion: EmotionDefinition) => {
     if (selectedEmotion?.id === emotion.id) {
@@ -23,6 +24,14 @@ export default function HomePage() {
     } else {
       setSelectedEmotion(emotion);
       setInputText(`I am feeling ${emotion.name.toLowerCase()} because `);
+
+      // Auto-scroll to chat/input section on mobile & desktop
+      setTimeout(() => {
+        inputSectionRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 100);
     }
   };
 
@@ -105,13 +114,15 @@ export default function HomePage() {
       </div>
 
       {/* Journaling Textarea + Find Perspective Action */}
-      <ReflectionInput
-        value={inputText}
-        onChange={setInputText}
-        onSubmit={handleSubmit}
-        selectedEmotionName={selectedEmotion?.name}
-        isLoading={isLoading}
-      />
+      <div ref={inputSectionRef} className="w-full">
+        <ReflectionInput
+          value={inputText}
+          onChange={setInputText}
+          onSubmit={handleSubmit}
+          selectedEmotionName={selectedEmotion?.name}
+          isLoading={isLoading}
+        />
+      </div>
     </div>
   );
 }
