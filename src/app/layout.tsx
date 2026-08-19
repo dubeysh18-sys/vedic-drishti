@@ -3,6 +3,7 @@ import { DM_Sans, Literata, Noto_Sans_Devanagari } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { AudioProvider } from "@/context/audio-context";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -71,9 +72,11 @@ export default function RootLayout({
           </svg>
         </div>
 
-        <Header />
-        <main className="flex-1 z-10 flex flex-col">{children}</main>
-        <Footer />
+        <AudioProvider>
+          <Header />
+          <main className="flex-1 z-10 flex flex-col">{children}</main>
+          <Footer />
+        </AudioProvider>
       </body>
     </html>
   );

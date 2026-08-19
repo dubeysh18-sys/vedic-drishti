@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Bookmark, Info, BookOpen, Menu } from "lucide-react";
 import SidebarDrawer from "./sidebar-drawer";
+import AudioToggle from "./audio-toggle";
 import { ReflectionMessageResponse } from "@/types/reflection";
 
 export default function Header() {
@@ -73,7 +74,8 @@ export default function Header() {
         </div>
 
         {/* Right CTA */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <AudioToggle />
           <Link
             href="/about"
             onClick={() => {
@@ -81,11 +83,12 @@ export default function Header() {
                 window.scrollTo({ top: 0, left: 0, behavior: "instant" });
               }
             }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-semibold tracking-wider uppercase font-sans text-primary bg-surface-container border border-outline-variant/40 hover:bg-white hover:border-gold/40 active:scale-95 transition-all shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gold"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-semibold tracking-wider uppercase font-sans text-primary bg-surface-container border border-outline-variant/40 hover:bg-white hover:border-gold/40 active:scale-95 transition-all shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gold"
             aria-label="How Drishti Works"
           >
             <BookOpen className="w-3.5 h-3.5 text-gold-muted shrink-0" />
-            <span>How Drishti Works</span>
+            <span className="hidden sm:inline">How Drishti Works</span>
+            <span className="sm:hidden">About</span>
           </Link>
         </div>
       </header>
