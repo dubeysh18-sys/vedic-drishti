@@ -3,25 +3,32 @@
 import { useState, useRef, useEffect } from "react";
 import EmotionGrid from "@/components/emotion-grid";
 import ReflectionInput from "@/components/reflection-input";
+import GuidedQuestionsPills from "@/components/guided-questions-pills";
 import LoadingView from "@/components/loading-view";
 import ReflectionResponse from "@/components/reflection-response";
 import { EmotionDefinition } from "@/types/emotion";
+import { GuidedQuestion } from "@/types/guided-question";
 import { ReflectionMessageResponse } from "@/types/reflection";
+import { getGuidedQuestionsForEmotion, getGuidedQuestionById } from "@/lib/emotions/guided-questions";
 import { saveChatToHistory } from "@/lib/storage/history-store";
 import LotusIcon from "@/components/lotus-icon";
 
 export default function HomePage() {
   const [selectedEmotion, setSelectedEmotion] = useState<EmotionDefinition | null>(null);
+  const [selectedGuidedQuestion, setSelectedGuidedQuestion] = useState<GuidedQuestion | null>(null);
   const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [reflectionResult, setReflectionResult] = useState<ReflectionMessageResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const inputSectionRef = useRef<HTMLDivElement>(null);
 
+  const guidedQuestions = getGuidedQuestionsForEmotion(selectedEmotion?.id);
+
   const handleReset = () => {
     setReflectionResult(null);
     setInputText("");
     setSelectedEmotion(null);
+    setSelectedGuidedQuestion(null);
     setError(null);
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -39,6 +46,21 @@ export default function HomePage() {
         setIsLoading(false);
         setError(null);
         setReflectionResult(customEvent.detail);
+        if (customEvent.detail.guidedQuestionId) {
+          const found = getGuidedQuestionById(customEvent.detail.guidedQuestionId);
+          setSelectedGuidedQuestion(
+            found ||
+              (customEvent.detail.guidedQuestion
+                ? {
+                    id: customEvent.detail.guidedQuestionId,
+                    text: customEvent.detail.guidedQuestion,
+                    emotionId: customEvent.detail.selectedEmotion || "",
+                  }
+                : null)
+          );
+        } else {
+          setSelectedGuidedQuestion(null);
+        }
         if (typeof window !== "undefined") {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -57,8 +79,10 @@ export default function HomePage() {
   const handleSelectEmotion = (emotion: EmotionDefinition) => {
     if (selectedEmotion?.id === emotion.id) {
       setSelectedEmotion(null);
+      setSelectedGuidedQuestion(null);
     } else {
       setSelectedEmotion(emotion);
+      setSelectedGuidedQuestion(null);
 
       // Smooth scroll to input section on mobile & desktop
       setTimeout(() => {
@@ -67,6 +91,14 @@ export default function HomePage() {
           block: "center",
         });
       }, 100);
+    }
+  };
+
+  const handleSelectGuidedQuestion = (question: GuidedQuestion) => {
+    if (selectedGuidedQuestion?.id === question.id) {
+      setSelectedGuidedQuestion(null);
+    } else {
+      setSelectedGuidedQuestion(question);
     }
   };
 
@@ -91,6 +123,8 @@ export default function HomePage() {
         body: JSON.stringify({
           message,
           selectedEmotion: selectedEmotion?.id,
+          guidedQuestionId: selectedGuidedQuestion?.id,
+          guidedQuestion: selectedGuidedQuestion?.text,
         }),
       });
 
@@ -150,6 +184,15 @@ export default function HomePage() {
         <div className="h-px w-full bg-gradient-to-r from-transparent via-gold-muted to-transparent"></div>
       </div>
 
+      {/* Guided Thought Prompts (US-01 to US-04) */}
+      {selectedEmotion && guidedQuestions.length > 0 && (
+        <GuidedQuestionsPills
+          questions={guidedQuestions}
+          selectedQuestionId={selectedGuidedQuestion?.id || null}
+          onSelectQuestion={handleSelectGuidedQuestion}
+        />
+      )}
+
       {/* Journaling Textarea + Find Perspective Action */}
       <div ref={inputSectionRef} className="w-full">
         <ReflectionInput
@@ -158,6 +201,7 @@ export default function HomePage() {
           onSubmit={handleSubmit}
           selectedEmotionId={selectedEmotion?.id}
           selectedEmotionName={selectedEmotion?.name}
+          selectedGuidedQuestion={selectedGuidedQuestion}
           isLoading={isLoading}
         />
       </div>

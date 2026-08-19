@@ -57,6 +57,8 @@ export interface ReflectionMessageResponse {
   sessionId: string;
   userInput: string;
   selectedEmotion: string | null;
+  guidedQuestionId?: string | null;
+  guidedQuestion?: string | null;
   responseType: ResponseType;
   ragOutcome: RagOutcome;
   emotionalReading?: EmotionalReading;

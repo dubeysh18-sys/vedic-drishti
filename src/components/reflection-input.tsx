@@ -5,12 +5,15 @@ import { Mic, ArrowRight, Loader2 } from "lucide-react";
 import { getEmotionConversationalPlaceholder } from "@/lib/emotions/taxonomy";
 import LotusIcon from "@/components/lotus-icon";
 
+import { GuidedQuestion } from "@/types/guided-question";
+
 interface ReflectionInputProps {
   value: string;
   onChange: (val: string) => void;
   onSubmit: () => void;
   selectedEmotionId?: string;
   selectedEmotionName?: string;
+  selectedGuidedQuestion?: GuidedQuestion | null;
   isLoading?: boolean;
 }
 
@@ -19,6 +22,7 @@ export default function ReflectionInput({
   onChange,
   onSubmit,
   selectedEmotionId,
+  selectedGuidedQuestion,
   isLoading = false,
 }: ReflectionInputProps) {
   const [isListening, setIsListening] = useState(false);
@@ -50,7 +54,7 @@ export default function ReflectionInput({
     }
   };
 
-  const placeholder = getEmotionConversationalPlaceholder(selectedEmotionId);
+  const placeholder = selectedGuidedQuestion?.text || getEmotionConversationalPlaceholder(selectedEmotionId);
   const canSubmit = Boolean((value && value.trim().length > 0) || selectedEmotionId);
 
   return (

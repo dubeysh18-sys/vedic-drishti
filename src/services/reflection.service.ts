@@ -44,6 +44,8 @@ export class ReflectionService {
         sessionId,
         userInput,
         selectedEmotion: request.selectedEmotion || null,
+        guidedQuestionId: request.guidedQuestionId || null,
+        guidedQuestion: request.guidedQuestion || null,
         responseType: "crisis",
         ragOutcome: "crisis",
         sources: [],
@@ -67,6 +69,8 @@ export class ReflectionService {
         sessionId,
         userInput,
         selectedEmotion: request.selectedEmotion || null,
+        guidedQuestionId: request.guidedQuestionId || null,
+        guidedQuestion: request.guidedQuestion || null,
         responseType: "safety_redirect",
         ragOutcome: "redirect",
         sources: [],
@@ -99,6 +103,10 @@ export class ReflectionService {
       emotionalReading,
       candidateSources,
       ragOutcome: retrievalResult.ragOutcome,
+      guidedQuestion:
+        request.guidedQuestionId && request.guidedQuestion
+          ? { id: request.guidedQuestionId, text: request.guidedQuestion }
+          : undefined,
     });
     const generationTimeMs = Date.now() - genStartTime;
 
@@ -196,6 +204,8 @@ export class ReflectionService {
       sessionId,
       userInput,
       selectedEmotion: request.selectedEmotion || null,
+      guidedQuestionId: request.guidedQuestionId || null,
+      guidedQuestion: request.guidedQuestion || null,
       responseType,
       ragOutcome: retrievalResult.ragOutcome,
       emotionalReading,
@@ -241,6 +251,8 @@ export class ReflectionService {
           sessionId: response.sessionId,
           userInput: response.userInput,
           selectedEmotion: response.selectedEmotion,
+          guidedQuestionId: response.guidedQuestionId || null,
+          guidedQuestion: response.guidedQuestion || null,
           emotionalReading: response.emotionalReading,
           sources: response.sources.map((s) => ({
             canonicalId: s.canonicalId,

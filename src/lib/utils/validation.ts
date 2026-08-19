@@ -3,6 +3,8 @@ import { z } from "zod";
 export const CreateReflectionSchema = z.object({
   message: z.string().min(1, "Message is required").max(2000, "Message cannot exceed 2000 characters"),
   selectedEmotion: z.string().optional(),
+  guidedQuestionId: z.string().optional(),
+  guidedQuestion: z.string().optional(),
   sessionId: z.string().optional(),
   conversationId: z.string().optional(),
 });

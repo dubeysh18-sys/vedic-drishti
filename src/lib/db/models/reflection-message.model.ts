@@ -5,6 +5,8 @@ export interface ReflectionMessageDocument extends Document {
   sessionId: string;
   userInput: string;
   selectedEmotion: string | null;
+  guidedQuestionId?: string | null;
+  guidedQuestion?: string | null;
   emotionalReading: {
     primaryEmotion: string;
     secondaryEmotions: string[];
@@ -38,6 +40,8 @@ const ReflectionMessageSchema = new Schema<ReflectionMessageDocument>(
     sessionId: { type: String, required: true, index: true },
     userInput: { type: String, required: true },
     selectedEmotion: { type: String, default: null },
+    guidedQuestionId: { type: String, default: null },
+    guidedQuestion: { type: String, default: null },
     emotionalReading: {
       primaryEmotion: { type: String, default: "" },
       secondaryEmotions: [{ type: String }],

@@ -3,6 +3,8 @@ import { ReflectionMessageResponse } from "./reflection";
 export interface CreateReflectionRequest {
   message: string;
   selectedEmotion?: string;
+  guidedQuestionId?: string;
+  guidedQuestion?: string;
   sessionId?: string;
   conversationId?: string;
 }
