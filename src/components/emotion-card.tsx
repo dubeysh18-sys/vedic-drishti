@@ -7,7 +7,6 @@ import {
   Cloud,
   Compass,
   Sun,
-  Sparkles,
   Heart,
   Wind,
   Shield,
@@ -15,6 +14,7 @@ import {
   GitCompare,
   Waves,
 } from "lucide-react";
+import LotusIcon from "@/components/lotus-icon";
 
 interface EmotionCardProps {
   emotion: EmotionDefinition;
@@ -24,33 +24,34 @@ interface EmotionCardProps {
 
 export default function EmotionCard({ emotion, isSelected, onSelect }: EmotionCardProps) {
   const renderIcon = (iconName: string) => {
+    const iconClass = "w-6 h-6 sm:w-7 sm:h-7 group-hover:scale-110 transition-transform duration-300";
     switch (iconName) {
       case "water_drop":
-        return <Droplet className="w-8 h-8 text-secondary group-hover:scale-110 transition-transform duration-300" />;
+        return <Droplet className={`${iconClass} text-secondary`} />;
       case "cyclone":
-        return <Waves className="w-8 h-8 text-on-surface-variant group-hover:scale-110 transition-transform duration-300" />;
+        return <Waves className={`${iconClass} text-on-surface-variant`} />;
       case "route":
-        return <Compass className="w-8 h-8 text-outline group-hover:scale-110 transition-transform duration-300" />;
+        return <Compass className={`${iconClass} text-outline`} />;
       case "cloud":
-        return <Cloud className="w-8 h-8 text-muted-stone group-hover:scale-110 transition-transform duration-300" />;
+        return <Cloud className={`${iconClass} text-muted-stone`} />;
       case "wb_sunny":
-        return <Sun className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />;
+        return <Sun className={`${iconClass} text-primary`} />;
       case "self_improvement":
-        return <Sparkles className="w-8 h-8 text-secondary group-hover:scale-110 transition-transform duration-300" />;
+        return <LotusIcon className={`${iconClass} text-secondary`} />;
       case "local_fire_department":
-        return <Flame className="w-8 h-8 text-error group-hover:scale-110 transition-transform duration-300" />;
+        return <Flame className={`${iconClass} text-error`} />;
       case "compare_arrows":
-        return <GitCompare className="w-8 h-8 text-muted-stone group-hover:scale-110 transition-transform duration-300" />;
+        return <GitCompare className={`${iconClass} text-muted-stone`} />;
       case "heart_broken":
-        return <Heart className="w-8 h-8 text-muted-stone group-hover:scale-110 transition-transform duration-300" />;
+        return <Heart className={`${iconClass} text-muted-stone`} />;
       case "person":
-        return <User className="w-8 h-8 text-outline group-hover:scale-110 transition-transform duration-300" />;
+        return <User className={`${iconClass} text-outline`} />;
       case "air":
-        return <Wind className="w-8 h-8 text-on-surface-variant group-hover:scale-110 transition-transform duration-300" />;
+        return <Wind className={`${iconClass} text-on-surface-variant`} />;
       case "shield":
-        return <Shield className="w-8 h-8 text-secondary group-hover:scale-110 transition-transform duration-300" />;
+        return <Shield className={`${iconClass} text-secondary`} />;
       default:
-        return <Sparkles className="w-8 h-8 text-gold-muted group-hover:scale-110 transition-transform duration-300" />;
+        return <LotusIcon className={`${iconClass} text-gold-muted`} />;
     }
   };
 
@@ -58,15 +59,16 @@ export default function EmotionCard({ emotion, isSelected, onSelect }: EmotionCa
     <button
       type="button"
       onClick={() => onSelect(emotion)}
-      className={`glass-card ${emotion.pebbleShapeClass} aspect-square flex flex-col items-center justify-center p-4 gap-2.5 group cursor-pointer active:scale-95 transition-all ${
+      aria-pressed={isSelected}
+      aria-label={`${emotion.name} emotion: select to reflect on feeling ${emotion.name.toLowerCase()}`}
+      className={`glass-card ${emotion.pebbleShapeClass} aspect-square flex flex-col items-center justify-center p-2 sm:p-2.5 md:p-3 gap-1 sm:gap-1.5 group cursor-pointer active:scale-95 transition-all focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 ${
         isSelected
-          ? "ring-2 ring-gold border-gold bg-white/90 shadow-[0_8px_30px_rgba(212,175,55,0.2)] scale-[1.03]"
+          ? "ring-2 ring-gold border-gold bg-white/95 shadow-[0_6px_20px_rgba(212,175,55,0.2)] scale-[1.02]"
           : "hover:border-gold/50"
       }`}
-      aria-label={`Select emotion ${emotion.name}`}
     >
-      <div className="flex items-center justify-center h-10 w-10">{renderIcon(emotion.iconName)}</div>
-      <span className="font-sans text-[11px] md:text-xs font-bold tracking-[0.12em] uppercase text-on-surface">
+      <div className="flex items-center justify-center h-7 w-7 sm:h-8 sm:w-8">{renderIcon(emotion.iconName)}</div>
+      <span className="font-sans text-[10px] sm:text-[11px] font-bold tracking-[0.1em] uppercase text-on-surface">
         {emotion.name}
       </span>
     </button>

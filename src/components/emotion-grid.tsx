@@ -12,7 +12,7 @@ interface EmotionGridProps {
 export default function EmotionGrid({ selectedEmotionId, onSelectEmotion }: EmotionGridProps) {
   return (
     <section className="w-full max-w-3xl mx-auto">
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-3 md:gap-4.5">
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5 sm:gap-3 md:gap-3.5">
         {CONTROLLED_EMOTIONS.map((emotion) => (
           <EmotionCard
             key={emotion.id}

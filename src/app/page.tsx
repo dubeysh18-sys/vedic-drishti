@@ -6,10 +6,9 @@ import ReflectionInput from "@/components/reflection-input";
 import LoadingView from "@/components/loading-view";
 import ReflectionResponse from "@/components/reflection-response";
 import { EmotionDefinition } from "@/types/emotion";
-import { getEmotionPromptStarter } from "@/lib/emotions/taxonomy";
 import { ReflectionMessageResponse } from "@/types/reflection";
 import { saveChatToHistory } from "@/lib/storage/history-store";
-import { Sparkles } from "lucide-react";
+import LotusIcon from "@/components/lotus-icon";
 
 export default function HomePage() {
   const [selectedEmotion, setSelectedEmotion] = useState<EmotionDefinition | null>(null);
@@ -58,12 +57,10 @@ export default function HomePage() {
   const handleSelectEmotion = (emotion: EmotionDefinition) => {
     if (selectedEmotion?.id === emotion.id) {
       setSelectedEmotion(null);
-      setInputText("");
     } else {
       setSelectedEmotion(emotion);
-      setInputText(getEmotionPromptStarter(emotion.id));
 
-      // Auto-scroll to chat/input section on mobile & desktop
+      // Smooth scroll to input section on mobile & desktop
       setTimeout(() => {
         inputSectionRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -74,7 +71,14 @@ export default function HomePage() {
   };
 
   const handleSubmit = async () => {
-    const message = inputText.trim();
+    let message = inputText.trim();
+
+    // If user has not typed free-form text but selected an emotion,
+    // explicitly treat as emotion-only reflection
+    if (!message && selectedEmotion) {
+      message = `I am feeling ${selectedEmotion.id}`;
+    }
+
     if (!message) return;
 
     setIsLoading(true);
@@ -114,21 +118,21 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex-1 flex flex-col items-center pt-20 md:pt-24 pb-28 px-4 md:px-8 max-w-container-max mx-auto w-full gap-8 md:gap-10">
-      {/* Hero Section - Directly starting with single-line title */}
-      <section className="text-center max-w-2xl mx-auto flex flex-col items-center gap-2">
-        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-primary tracking-tight leading-tight whitespace-nowrap">
+    <div className="flex-1 flex flex-col items-center pt-20 md:pt-24 pb-16 px-4 md:px-6 max-w-container-max mx-auto w-full gap-5 md:gap-6">
+      {/* Hero Section - Centered with balanced typography and subtext spacing (US-01) */}
+      <section className="text-center max-w-xl mx-auto flex flex-col items-center gap-2.5 sm:gap-3">
+        <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-primary tracking-tight leading-snug">
           What are you carrying today?
         </h1>
 
-        <p className="font-sans text-sm md:text-base text-muted-stone max-w-lg leading-relaxed">
-          Select an emotion below or journal your thoughts to find a timeless perspective from the Bhagavad Gita.
+        <p className="font-sans text-xs sm:text-sm text-muted-stone max-w-md leading-relaxed text-center">
+          Tell us what&apos;s on your mind. We&apos;ll find a perspective in timeless Vedic wisdom.
         </p>
       </section>
 
       {/* Error display if any */}
       {error && (
-        <div className="w-full max-w-xl bg-error-container text-on-error-container p-4 rounded-xl text-sm font-sans text-center">
+        <div className="w-full max-w-xl bg-error-container text-on-error-container p-3.5 rounded-xl text-xs font-sans text-center">
           {error}
         </div>
       )}
@@ -139,10 +143,10 @@ export default function HomePage() {
         onSelectEmotion={handleSelectEmotion}
       />
 
-      {/* Ornate Lotus Divider */}
-      <div className="flex items-center justify-center gap-4 py-2 w-full max-w-2xl mx-auto opacity-40">
+      {/* Ornate Lotus Divider with brand LotusIcon (US-04) */}
+      <div className="flex items-center justify-center gap-3 py-1 w-full max-w-xl mx-auto opacity-40">
         <div className="h-px w-full bg-gradient-to-r from-transparent via-gold-muted to-transparent"></div>
-        <Sparkles className="w-4 h-4 text-gold-muted shrink-0" />
+        <LotusIcon className="w-4 h-4 text-gold-muted shrink-0" />
         <div className="h-px w-full bg-gradient-to-r from-transparent via-gold-muted to-transparent"></div>
       </div>
 
@@ -152,6 +156,7 @@ export default function HomePage() {
           value={inputText}
           onChange={setInputText}
           onSubmit={handleSubmit}
+          selectedEmotionId={selectedEmotion?.id}
           selectedEmotionName={selectedEmotion?.name}
           isLoading={isLoading}
         />

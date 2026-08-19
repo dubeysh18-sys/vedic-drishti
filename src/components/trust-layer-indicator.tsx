@@ -1,4 +1,5 @@
-import { Shield, BookOpen, Sparkles, Award } from "lucide-react";
+import { Shield, BookOpen, Award } from "lucide-react";
+import LotusIcon from "@/components/lotus-icon";
 
 interface TrustLayerIndicatorProps {
   layer: "original" | "translation" | "commentary" | "ai";
@@ -30,7 +31,7 @@ export default function TrustLayerIndicator({ layer }: TrustLayerIndicatorProps)
     case "ai":
       return (
         <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase font-sans bg-indigo-50 text-indigo-900 border border-indigo-200/80 shadow-xs">
-          <Sparkles className="w-3 h-3 text-indigo-600" />
+          <LotusIcon className="w-3 h-3 text-indigo-600" />
           Layer 4: AI Synthesis
         </span>
       );

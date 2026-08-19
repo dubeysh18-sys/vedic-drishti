@@ -4,7 +4,7 @@ export interface HistoryItem {
   id: string;
   title: string;
   timestamp: number; // Date.now()
-  selectedEmotion?: string;
+  selectedEmotion?: string | null;
   reflectionData: ReflectionMessageResponse;
 }
 

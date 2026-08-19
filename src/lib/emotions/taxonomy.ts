@@ -182,3 +182,58 @@ export function getEmotionPromptStarter(emotionId: string): string {
       return `I am reflecting on `;
   }
 }
+
+export interface PromptStarterParts {
+  base: string;
+  connector: string;
+  fullText: string;
+}
+
+export function getEmotionPromptStarterParts(emotionId?: string | null): PromptStarterParts | null {
+  if (!emotionId) return null;
+  const fullText = getEmotionPromptStarter(emotionId);
+  const trimmed = fullText.trimEnd();
+  const lastSpaceIdx = trimmed.lastIndexOf(" ");
+  if (lastSpaceIdx === -1) return null;
+
+  const base = fullText.slice(0, lastSpaceIdx + 1);
+  const connector = fullText.slice(lastSpaceIdx + 1);
+  return {
+    base,
+    connector,
+    fullText,
+  };
+}
+
+export function getEmotionConversationalPlaceholder(emotionId?: string | null): string {
+  if (!emotionId) return "Or tell me what's on your mind...";
+  switch (emotionId.toLowerCase()) {
+    case "anxious":
+      return "What's making you feel anxious?";
+    case "overwhelmed":
+      return "What's leaving you feeling overwhelmed?";
+    case "confused":
+      return "What's leaving you feeling confused?";
+    case "heavy":
+      return "What's making your heart feel heavy?";
+    case "hopeful":
+      return "What's giving you hope right now?";
+    case "seeking":
+      return "What guidance are you seeking today?";
+    case "angry":
+      return "What's making you feel angry?";
+    case "jealous":
+      return "What's stirring feelings of comparison?";
+    case "grieving":
+      return "What loss or change are you moving through?";
+    case "lonely":
+      return "What's making you feel alone?";
+    case "restless":
+      return "What's making your mind feel restless?";
+    case "fearful":
+      return "What's making you feel fearful?";
+    default:
+      return "Or tell me what's on your mind...";
+  }
+}
+

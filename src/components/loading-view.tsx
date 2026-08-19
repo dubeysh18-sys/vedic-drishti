@@ -21,9 +21,9 @@ export default function LoadingView() {
   }, []);
 
   return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center px-6 text-center space-y-8 animate-slide-up">
+    <div className="min-h-[45vh] flex flex-col items-center justify-center px-4 text-center space-y-5 animate-slide-up">
       {/* Glowing Lotus Logo */}
-      <div className="w-24 h-24 md:w-28 md:h-28 animate-pulse-gold flex items-center justify-center relative">
+      <div className="w-16 h-16 md:w-20 md:h-20 animate-pulse-gold flex items-center justify-center relative">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/logo.png"
@@ -33,8 +33,8 @@ export default function LoadingView() {
       </div>
 
       {/* Loading Text in Glass Frame */}
-      <div className="glass-panel px-8 py-6 rounded-2xl max-w-sm border border-white/80 shadow-soft">
-        <p className="font-serif text-on-surface-variant text-lg md:text-xl leading-relaxed italic transition-opacity duration-500">
+      <div className="glass-panel px-6 py-4 rounded-xl max-w-sm border border-white/80 shadow-soft">
+        <p className="font-serif text-on-surface-variant text-base md:text-lg leading-relaxed italic transition-opacity duration-500">
           {MINDFUL_MESSAGES[index]}
         </p>
       </div>

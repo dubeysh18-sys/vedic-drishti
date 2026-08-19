@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import {
-  Sparkles,
   History,
   ChevronDown,
   ChevronRight,
@@ -255,7 +254,7 @@ export default function SidebarDrawer({
             }`}
           >
             <Info className="w-4 h-4 text-gold-muted" />
-            <span>About & Trust Model</span>
+            <span>How Drishti Works</span>
           </Link>
         </div>
       </div>

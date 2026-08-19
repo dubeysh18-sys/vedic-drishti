@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Heart, RefreshCw } from "lucide-react";
+import { Heart, RefreshCw } from "lucide-react";
 import { MahamantraResponseData } from "@/types/reflection";
 
 interface MahamantraRedirectProps {

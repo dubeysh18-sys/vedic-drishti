@@ -65,52 +65,27 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          <Link
-            href="/"
-            onClick={handleStartNew}
-            className={`font-sans text-sm font-medium transition-colors ${
-              pathname === "/" ? "text-primary font-semibold" : "text-muted-stone hover:text-primary"
-            }`}
-          >
-            Reflect
-          </Link>
-          <Link
-            href="/archive"
-            className={`flex items-center gap-1.5 font-sans text-sm font-medium transition-colors ${
-              pathname === "/archive" ? "text-primary font-semibold" : "text-muted-stone hover:text-primary"
-            }`}
-          >
-            <Bookmark className="w-4 h-4 text-gold-muted" />
-            Archive
-          </Link>
-          <Link
-            href="/about"
-            className={`flex items-center gap-1.5 font-sans text-sm font-medium transition-colors ${
-              pathname === "/about" ? "text-primary font-semibold" : "text-muted-stone hover:text-primary"
-            }`}
-          >
-            <Info className="w-4 h-4 text-muted-stone" />
-            About & Trust
-          </Link>
-        </nav>
+        {/* Center Positioning Statement (Bold & Italic as per US 3) */}
+        <div className="hidden md:flex items-center text-center px-2">
+          <span className="text-xs lg:text-sm font-serif italic font-bold text-primary/85 tracking-wide select-none pointer-events-none whitespace-nowrap">
+            Find perspective. Draw from timeless wisdom.
+          </span>
+        </div>
 
         {/* Right CTA */}
         <div className="flex items-center gap-2">
           <Link
-            href="/archive"
-            className="p-2 text-primary hover:bg-white/40 rounded-full transition-colors flex items-center justify-center md:hidden"
-            title="View Archive"
-          >
-            <Bookmark className="w-5 h-5 text-gold-muted" />
-          </Link>
-          <Link
             href="/about"
-            className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase font-sans text-primary bg-surface-container border border-outline-variant/40 hover:bg-white transition-all shadow-sm"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+              }
+            }}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs font-semibold tracking-wider uppercase font-sans text-primary bg-surface-container border border-outline-variant/40 hover:bg-white hover:border-gold/40 active:scale-95 transition-all shadow-xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-gold"
+            aria-label="How Drishti Works"
           >
-            <BookOpen className="w-3.5 h-3.5 text-gold-muted" />
-            Vedic Wisdom
+            <BookOpen className="w-3.5 h-3.5 text-gold-muted shrink-0" />
+            <span>How Drishti Works</span>
           </Link>
         </div>
       </header>
