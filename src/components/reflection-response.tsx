@@ -39,7 +39,7 @@ export default function ReflectionResponse({ data, onReset }: ReflectionResponse
   };
 
   // 1. Crisis Response
-  if ((data.responseType === "crisis" || data.ragOutcome === "crisis" || data.safetyMetadata?.isCrisis) && data.crisisResponse) {
+  if ((data.responseType === "crisis" || data.ragOutcome === "crisis") && data.crisisResponse) {
     return (
       <div className="max-w-3xl mx-auto px-6 pt-20 md:pt-24 pb-28">
         <SafetyBanner
@@ -62,20 +62,11 @@ export default function ReflectionResponse({ data, onReset }: ReflectionResponse
   }
 
   // 2. Safety Redirect (Mahamantra Calm UI)
-  if (data.responseType === "safety_redirect" || (data.isMahamantraRedirect && data.mahamantraData)) {
+  if (data.responseType === "safety_redirect" || data.ragOutcome === "redirect") {
     return (
       <div className="max-w-3xl mx-auto px-6 pt-20 md:pt-24 pb-28">
         <MahamantraRedirect
-          mahamantraData={data.mahamantraResponse || {
-            title: data.mahamantraData?.title || "Hare Krishna Mahamantra",
-            mantra: data.mahamantraData?.mantra || "हरे कृष्ण हरे कृष्ण कृष्ण कृष्ण हरे हरे । हरे राम हरे राम राम राम हरे हरे ॥",
-            transliteration: "Hare Kṛṣṇa Hare Kṛṣṇa Kṛṣṇa Kṛṣṇa Hare Hare | Hare Rāma Hare Rāma Rāma Rāma Hare Hare",
-            meaning: "O Lord, O Energy of the Lord, please engage me in Your service with devotion and equanimity.",
-            source: "Kali Santarana Upanishad",
-            canonicalId: "ks-upanishad:1:1",
-            context: data.mahamantraData?.guidance || "Chanted for spiritual clarity, focus, and calming the restless mind.",
-            audioUrl: undefined,
-          }}
+          mahamantraData={data.mahamantraResponse}
           onNewReflection={onReset || (() => window.location.reload())}
         />
       </div>
@@ -83,50 +74,13 @@ export default function ReflectionResponse({ data, onReset }: ReflectionResponse
   }
 
   // 3. No Match / Honest Uncertainty
-  if (data.responseType === "no_match") {
+  if (data.responseType === "no_match" || (data.ragOutcome === "noStrongMatch" && !data.reflection)) {
     return (
       <div className="max-w-3xl mx-auto px-6 pt-20 md:pt-24 pb-28">
         <NoMatchView
           reflection={data.reflection}
           onNewReflection={onReset || (() => window.location.reload())}
         />
-      </div>
-    );
-  }
-
-  // 4. Prohibited Content Safety Redirect Gate
-  if (data.safetyMetadata?.isProhibited) {
-    return (
-      <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 pt-20 md:pt-24 pb-28 animate-slide-up">
-        {/* Top back navigation */}
-        <div className="flex justify-between items-center mb-6">
-          {onReset ? (
-            <button
-              type="button"
-              onClick={onReset}
-              className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-widest font-sans text-muted-stone hover:text-primary transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              New Reflection
-            </button>
-          ) : (
-            <Link
-              href="/"
-              className="flex items-center gap-1.5 text-xs uppercase font-bold tracking-widest font-sans text-muted-stone hover:text-primary transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Home
-            </Link>
-          )}
-          <TrustLayerIndicator layer="crisis" />
-        </div>
-
-        <div className="bg-surface-container border border-outline-variant/50 rounded-2xl p-6 sm:p-8 shadow-sm flex flex-col gap-4 text-center">
-          <h2 className="font-serif font-bold text-xl text-primary">Content Boundary Notice</h2>
-          <p className="font-sans text-sm text-muted-stone leading-relaxed">
-            Drishti holds sacred philosophical space for emotional and spiritual reflection. We cannot generate advice or perspectives related to prohibited, violent, medical, or legal queries.
-          </p>
-        </div>
       </div>
     );
   }
